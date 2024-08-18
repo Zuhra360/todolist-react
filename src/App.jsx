@@ -1,34 +1,39 @@
-import { useState } from "react";
+import React from "react";
+import {createBrowserRouter,RouterProvider} from "react-router-dom";
+import { Navbar } from "./components/Navbar";
+import { Heropage } from "./components/Heropage";
+import { Todolist } from "./components/todolist";
+import {Calculator} from "./components/Calculator";
+import "./style.css"
+import { Homepage } from "./components/Homepage";
+const router = createBrowserRouter([
+  {
+    path:  "/",
+    element:<Navbar/>,
+  },
+  {
+    path:  "hero",
+    element: <Heropage/>
+  },
+  {
+    path:  "todolist",
+    element: <Todolist/>
+  },
+  {
+    path:  "calculator",
+    element: <Calculator/>
+  },
+  {
+    path:  "homepage",
+    element: <Homepage/>
+  },
 
-export const App = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [items, setItems] = useState([]);
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-};
-  const handleAddItem = () => {
-    if (inputValue.trim() !== '') { // Prevent adding empty items
-      setItems([...items, inputValue]);
-      setInputValue(''); // Clear the input field after adding the item
+  {
+    path:  "*",
+    element: <div>404 Not Found</div>,
   }
-};
-
-  return (
-    <>
-    <h1>To Do List</h1>
-     <input type="text" value={inputValue} onChange={handleInputChange}  />
-     <button onClick={handleAddItem}>Add</button>
-     <ul>
-                {items.map((item, index) => (
-                    <li key={index}>
-                      <label>
-                        <input type="checkbox"/>
-                        </label>{item}</li>
-                ))}
-            </ul>
-      
-      
-      
-    </>
-  );
+]);
+export const App = () => {
+  
+  return <RouterProvider router={router} />;
 };
